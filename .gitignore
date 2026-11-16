@@ -1,0 +1,5 @@
+out/
+*.syx
+*.work/
+tools/host_test
+tools/dt_host.c
