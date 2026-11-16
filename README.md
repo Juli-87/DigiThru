@@ -52,9 +52,8 @@ It changes no pattern, kit or project data.
 
 ## Status
 
-0.2. Pitch bend and aftertouch were tested on a Digitakt mk1 with OS 1.53
-(in 0.1). 0.2 fixes the mod wheel, which 0.1 did not forward; not yet tested
-on a unit. The forwarding logic has a host-side test
+0.2, tested on a Digitakt mk1 with OS 1.53: pitch bend, aftertouch and the
+mod wheel reach the synth on the active MIDI track's channel. The forwarding logic has a host-side test
 (`tools/run_host_test.sh`, 19 cases, ASan/UBSan).
 
 ## Build
