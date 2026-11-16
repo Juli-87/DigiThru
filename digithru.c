@@ -1,13 +1,15 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
-/* DigiThru 0.1 for the Digitakt mk1 (OS 1.53): pitch bend, aftertouch and the
+/* DigiThru 0.2 for the Digitakt mk1 (OS 1.53): pitch bend, aftertouch and the
  * mod wheel from MIDI IN go on to the active MIDI track's channel.
  *
  * The stock firmware drops them: its MIDI task sends each message it receives
  * to a table of handlers by status (0x401b8a54, one pointer per high nibble),
  * and the entries for poly aftertouch (0xA0), channel pressure (0xD0) and pitch
  * bend (0xE0) point at a bare rts. DigiThru points those three entries at its
- * own handlers ("ptr" sites). The mod wheel (CC 1) arrives through core's
- * ev_midi_cc.
+ * own handlers ("ptr" sites). The control change entry (0xB0) it wraps: the
+ * stock CC handler takes CC 1 and 33 (mod wheel MSB, LSB) for the track's own
+ * 14-bit mod wheel (0x400d685a) before any CC router or core's ev_midi_cc sees
+ * them, so DigiThru forwards them first and then calls the stock handler.
  *
  * A message is forwarded when it comes on the AUTO channel, MIDI CONFIG
  * receives notes, and the active track is a MIDI track (9-16) whose CHAN is on.
@@ -34,8 +36,10 @@ typedef int32_t (*mtrk_chan_t)(int32_t mt);
 #define ACTIVE_TRACK (*(volatile int32_t *)ACTIVE_TRACK_AT) /* 0-7 audio, 8-15 MIDI */
 #define AUTO_CHAN    (*(volatile int32_t *)AUTO_CHAN_AT)    /* 0-15 */
 #define RX_NOTES     (*(volatile int32_t *)RX_NOTES_AT)     /* MIDI CONFIG: receive notes */
-
-#define CORE_MIDI_CC_AUTO 1
+#define RX_CC        (*(volatile int32_t *)RX_CC_AT)        /* MIDI CONFIG: receive CC */
+/* 0x400d4a90 the stock CC handler, f(msg, len, flags) */
+typedef void (*cc_handler_t)(const uint8_t *msg, int32_t len, int32_t flags);
+#define STOCK_CC ((cc_handler_t)STOCK_CC_AT)
 
 /* state, written by the MIDI task (handlers) and the UI task (tick) */
 static volatile int32_t dt_bent_ch = -1;     /* a channel left with PB/pressure off centre */
@@ -98,17 +102,20 @@ void dt_polypress(const uint8_t *msg, int32_t len, int32_t flags)
     dt_send(3, 0xA0 | ch, msg[1], msg[2]);
 }
 
-/* ev_midi_cc: the mod wheel on the auto channel, active track a MIDI track */
-int32_t dt_cc(int32_t track, int32_t cc, int32_t value, int32_t flags)
+/* the CC table entry: the mod wheel (CC 1, and its LSB CC 33) on the auto
+ * channel goes to the active MIDI track first; every CC then goes on to stock */
+void dt_control(const uint8_t *msg, int32_t len, int32_t flags)
 {
-    int32_t ch;
-    if (cc != 1 || !(flags & CORE_MIDI_CC_AUTO) || track < 8 || track > 15)
-        return 0;
-    ch = MTRK_CHAN(track - 8);
-    if (ch < 0 || ch > 15)
-        return 0;
-    dt_send(3, 0xB0 | ch, 1, value);
-    return 1;                               /* taken: the stock ignores CC 1 there */
+    int32_t t, ch;
+    if ((msg[1] == 1 || msg[1] == 33) && (msg[0] & 15) == AUTO_CHAN && RX_CC) {
+        t = ACTIVE_TRACK;
+        if (t >= 8 && t <= 15) {
+            ch = MTRK_CHAN(t - 8);
+            if (ch >= 0 && ch <= 15)
+                dt_send(3, 0xB0 | ch, msg[1], msg[2]);
+        }
+    }
+    STOCK_CC(msg, len, flags);
 }
 
 /* ev_tick: the active track changed, so centre what the old one left bent */

@@ -1,30 +1,59 @@
 {
  "id": "digithru",
- "version": "0.1",
+ "version": "0.2",
  "title": "DigiThru (PB/AT/MW to MIDI tracks)",
  "category": "MIDI",
  "author": "Juli-87",
  "license": "GPL-2.0-or-later",
- "description": "Pitch bend, aftertouch (channel and poly) and the mod wheel arriving on the AUTO channel go out on the active MIDI track's channel, like its notes. Leaving the track centres its pitch bend and clears its pressure.",
+ "description": "Pitch bend, aftertouch (channel and poly) and the mod wheel (CC 1/33) arriving on the AUTO channel go out on the active MIDI track's channel, like its notes. Leaving the track centres its pitch bend and clears its pressure.",
  "device": "digitakt-mk1",
  "os": "1.53",
- "sources": ["digithru.c"],
+ "sources": [
+  "digithru.c"
+ ],
  "cflags": [
   "-DSEQ_SEND_AT=0x400e076a",
   "-DMTRK_CHAN_AT=0x400e07b0",
   "-DACTIVE_TRACK_AT=0x4197b6b4",
   "-DAUTO_CHAN_AT=0x4197b6fc",
-  "-DRX_NOTES_AT=0x4197b778"
+  "-DRX_NOTES_AT=0x4197b778",
+  "-DRX_CC_AT=0x4197b77c",
+  "-DSTOCK_CC_AT=0x400d4a90"
  ],
  "sites": [
-  {"addr": "0x401b8a7c", "stock": "400d427e", "op": "ptr", "target": "dt_polypress"},
-  {"addr": "0x401b8a88", "stock": "400d4280", "op": "ptr", "target": "dt_chanpress"},
-  {"addr": "0x401b8a8c", "stock": "400d4282", "op": "ptr", "target": "dt_pitchbend"}
+  {
+   "addr": "0x401b8a7c",
+   "stock": "400d427e",
+   "op": "ptr",
+   "target": "dt_polypress"
+  },
+  {
+   "addr": "0x401b8a80",
+   "stock": "400d4a90",
+   "op": "ptr",
+   "target": "dt_control"
+  },
+  {
+   "addr": "0x401b8a88",
+   "stock": "400d4280",
+   "op": "ptr",
+   "target": "dt_chanpress"
+  },
+  {
+   "addr": "0x401b8a8c",
+   "stock": "400d4282",
+   "op": "ptr",
+   "target": "dt_pitchbend"
+  }
  ],
  "subscribe": [
-  {"event": "ev_midi_cc", "fn": "dt_cc", "order": 50},
-  {"event": "ev_tick", "fn": "dt_tick", "order": 50}
+  {
+   "event": "ev_tick",
+   "fn": "dt_tick",
+   "order": 50
+  }
  ],
- "resources": {"core": "4.3"},
- "requires": ["core"]
+ "requires": [
+  "core"
+ ]
 }
