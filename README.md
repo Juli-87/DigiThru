@@ -19,7 +19,7 @@ and pressure 0, so no note stays bent.
 
 ## Install
 
-1. Get `digithru-<version>.elemod` from [Releases](../../releases), or from
+1. Get `digithru-<version>.elemod` from the [`elemod`](elemod) folder, or from
    the [Elekloader Shop](https://elekloader.github.io/shop/).
 2. In elekloader (app or [web builder](https://elekloader.github.io/elekloader/)),
    pick your stock `Digitakt_OS1.53.syx`, add the `.elemod`, tick it with any

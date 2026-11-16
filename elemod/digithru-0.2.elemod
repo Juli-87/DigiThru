@@ -1,0 +1,427 @@
+{
+ "elemod": 2,
+ "id": "digithru",
+ "version": "0.2",
+ "title": "DigiThru (PB/AT/MW to MIDI tracks)",
+ "description": "Pitch bend, aftertouch (channel and poly) and the mod wheel (CC 1/33) arriving on the AUTO channel go out on the active MIDI track's channel, like its notes. Leaving the track centres its pitch bend and clears its pressure.",
+ "category": "MIDI",
+ "author": "Juli-87",
+ "license": "GPL-2.0-or-later",
+ "target": {
+  "device": "digitakt-mk1",
+  "product": "Digitakt mk1",
+  "os": "1.53",
+  "syx_sha256": "9bdd44bb6102fb25c143cfab97bc92b7a89c463f795d3112dce89771e29bcc92",
+  "section3_sha256": "4b47a9507758ca5669ca02ab2c0374d2c04c98aece445408295cc1dcb265c5df",
+  "section3_len": 2475584
+ },
+ "sections": {
+  ".run": {
+   "align": 4,
+   "len": 768,
+   "parts": [
+    [
+     "hex",
+     "2f02740f102f000b22394197b6fcc082b280662420394197b7784a80671a20394197b6b472075180b280650c"
+    ],
+    [
+     "stock",
+     "0x40002e98",
+     8
+    ],
+    [
+     "hex",
+     "400e07b0241f70ff"
+    ],
+    [
+     "stock",
+     "0x400245b0",
+     8
+    ],
+    [
+     "hex",
+     "041c246e00081f12578f4ebaffb0588f2400700fb082655072e0787f8282102a0001162a0002486efffc487800037381c084c684e1891d43fffe1200"
+    ],
+    [
+     "stock",
+     "0x4006cca4",
+     8
+    ],
+    [
+     "hex",
+     "076a508f4a2a00016724700123c00000000023c20000000020394197b6b423c0000000004cee041cffec4e5e4e75102a00027240b380"
+    ],
+    [
+     "stock",
+     "0x4002be5e",
+     8
+    ],
+    [
+     "hex",
+     "23c00000000023c20000000020394197b6b423c00000000060cc"
+    ],
+    [
+     "stock",
+     "0x4000cbbc",
+     12
+    ],
+    [
+     "hex",
+     "1f12578f4ebaff0e588f2400700fb082654e70d080824203122a0001486efffc4878000271801d43fffe767fc283e18810013d40fffc4eb9400e076a4a2a000156c0508f7100448023c00000000023c20000000020394197b6b423c000000000"
+    ],
+    [
+     "stock",
+     "0x4000cc9e",
+     10
+    ],
+    [
+     "stock",
+     "0x4000cbbc",
+     12
+    ],
+    [
+     "hex",
+     "1f12578f4ebafe98588f720fb280653076a08083122a0001142a0002767f486efffc487800037180c283c483e1881d42fffe10013d40fffc4eb9400e076a508f"
+    ],
+    [
+     "stock",
+     "0x4000cc9e",
+     10
+    ],
+    [
+     "hex",
+     "4e56ffe8"
+    ],
+    [
+     "stock",
+     "0x40010afc",
+     8
+    ],
+    [
+     "stock",
+     "0x4000d418",
+     8
+    ],
+    [
+     "hex",
+     "102a00010280000000df53804a80671a"
+    ],
+    [
+     "stock",
+     "0x401764ba",
+     8
+    ],
+    [
+     "hex",
+     "2d4a0008"
+    ],
+    [
+     "stock",
+     "0x4008554a",
+     8
+    ],
+    [
+     "hex",
+     "4ef9400d4a901012780f22394197b6fcc084b28066d620394197b77c4a8067cc20394197b6b47a075180ba8065be2f004eb9400e07b0588fb88065b072b07a7f8081122a0001182a0002486efffc487800037180c285c885e1881d44fffe10013d40fffc4eb9400e076a508f"
+    ],
+    [
+     "stock",
+     "0x401764ba",
+     8
+    ],
+    [
+     "hex",
+     "2d4a0008"
+    ],
+    [
+     "stock",
+     "0x4008554a",
+     8
+    ],
+    [
+     "hex",
+     "4ef9400d4a904e56fffc2f022439000000004a826d7422394197b6b4203900000000b081676470ff23c0000000002039000000004a80671e7040"
+    ],
+    [
+     "stock",
+     "0x400d6cfa",
+     8
+    ],
+    [
+     "hex",
+     "3d40fffe70e080821d40fffd4eb9400e076a508f2039000000004a80671e70d084804240486efffd487800021d42fffd3d40fffe4eb9400e076a508f42b90000000042b900000000"
+    ],
+    [
+     "stock",
+     "0x400286ae",
+     8
+    ],
+    [
+     "stock",
+     "0x401a9db2",
+     10
+    ]
+   ]
+  },
+  ".bss": {
+   "align": 4,
+   "size": 8
+  }
+ },
+ "symbols": {
+  "dt_target.isra.0": [
+   ".run",
+   0
+  ],
+  "dt_pb_off": [
+   ".bss",
+   4
+  ],
+  "dt_bent_ch": [
+   ".run",
+   764
+  ],
+  "dt_bent_track": [
+   ".run",
+   760
+  ],
+  "dt_at_off": [
+   ".bss",
+   0
+  ],
+  "dt_control": [
+   ".run",
+   428
+  ],
+  "dt_chanpress": [
+   ".run",
+   224
+  ],
+  "dt_polypress": [
+   ".run",
+   342
+  ],
+  "dt_tick": [
+   ".run",
+   618
+  ],
+  "dt_pitchbend": [
+   ".run",
+   62
+  ]
+ },
+ "exports": [
+  "dt_chanpress",
+  "dt_control",
+  "dt_pitchbend",
+  "dt_polypress",
+  "dt_tick"
+ ],
+ "imports": [],
+ "weak": [],
+ "relocs": [
+  [
+   ".run",
+   150,
+   "abs32",
+   "sec:.bss",
+   4
+  ],
+  [
+   ".run",
+   156,
+   "abs32",
+   "sec:.run",
+   764
+  ],
+  [
+   ".run",
+   168,
+   "abs32",
+   "sec:.run",
+   760
+  ],
+  [
+   ".run",
+   200,
+   "abs32",
+   "sec:.bss",
+   4
+  ],
+  [
+   ".run",
+   206,
+   "abs32",
+   "sec:.run",
+   764
+  ],
+  [
+   ".run",
+   218,
+   "abs32",
+   "sec:.run",
+   760
+  ],
+  [
+   ".run",
+   310,
+   "abs32",
+   "sec:.bss",
+   0
+  ],
+  [
+   ".run",
+   316,
+   "abs32",
+   "sec:.run",
+   764
+  ],
+  [
+   ".run",
+   328,
+   "abs32",
+   "sec:.run",
+   760
+  ],
+  [
+   ".run",
+   626,
+   "abs32",
+   "sec:.run",
+   764
+  ],
+  [
+   ".run",
+   642,
+   "abs32",
+   "sec:.run",
+   760
+  ],
+  [
+   ".run",
+   654,
+   "abs32",
+   "sec:.run",
+   764
+  ],
+  [
+   ".run",
+   660,
+   "abs32",
+   "sec:.bss",
+   4
+  ],
+  [
+   ".run",
+   700,
+   "abs32",
+   "sec:.bss",
+   0
+  ],
+  [
+   ".run",
+   740,
+   "abs32",
+   "sec:.bss",
+   0
+  ],
+  [
+   ".run",
+   746,
+   "abs32",
+   "sec:.bss",
+   4
+  ]
+ ],
+ "sites": [
+  {
+   "addr": "0x401b8a7c",
+   "len": 4,
+   "stock_sha256": "d08822bbbf3f59a51cd5378b03b3e5a9cd3b0b17727c3119fac3a025ce34fcf4",
+   "new": "00000000",
+   "kind": "data",
+   "relocs": [
+    [
+     0,
+     "abs32",
+     "sym:dt_polypress",
+     0
+    ]
+   ]
+  },
+  {
+   "addr": "0x401b8a80",
+   "len": 4,
+   "stock_sha256": "5b00186801dbd2075eb09c362fbf5323fe2d5bbca9d056be25ad9b8f24492184",
+   "new": "00000000",
+   "kind": "data",
+   "relocs": [
+    [
+     0,
+     "abs32",
+     "sym:dt_control",
+     0
+    ]
+   ]
+  },
+  {
+   "addr": "0x401b8a88",
+   "len": 4,
+   "stock_sha256": "c413120e925b53e72fdea13e8b341f70ab58eced4f0149a30f4cd4a41f963cfc",
+   "new": "00000000",
+   "kind": "data",
+   "relocs": [
+    [
+     0,
+     "abs32",
+     "sym:dt_chanpress",
+     0
+    ]
+   ]
+  },
+  {
+   "addr": "0x401b8a8c",
+   "len": 4,
+   "stock_sha256": "9a52bead3e55c50b6e457d70c114ce507c9ad0b20670095cb2273afaab750217",
+   "new": "00000000",
+   "kind": "data",
+   "relocs": [
+    [
+     0,
+     "abs32",
+     "sym:dt_pitchbend",
+     0
+    ]
+   ]
+  }
+ ],
+ "collections": {},
+ "contribute": [
+  {
+   "to": "ev_tick",
+   "order": 50,
+   "data": "00000000",
+   "relocs": [
+    [
+     0,
+     "abs32",
+     "sym:dt_tick",
+     0
+    ]
+   ],
+   "claims": []
+  }
+ ],
+ "copied": [],
+ "resources": {},
+ "requires": [
+  "core"
+ ],
+ "conflicts": [],
+ "build": {
+  "sources": {
+   "digithru.c": "f26dc5f007ac02c4737a3c08517214f1def25529b4b3d2543a8976997650371b"
+  }
+ },
+ "signature": null
+}
